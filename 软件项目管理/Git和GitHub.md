@@ -1,28 +1,45 @@
 
 
-# Git与GitHub
+# Git仓库介绍
 
-## 分散式仓库结构
+由Git管理的项目, 分为本地仓库和远程仓库, 二者本质上类似, <u>都可以有多个分支</u>.
+
+仓库的URL为: `https://github.com/<userName>/<repositoryName>`
 
 ![image-20220209042638957](https://namebucket.oss-cn-beijing.aliyuncs.com/img/GitHub%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 
 
-仓库的URL为: https://github.com/用户名/项目名
-
-**流程**
-
-```mermaid
-flowchart LR
-	subgraph 上传
-        direction LR
-        工作区 -->|git add| 暂存区 -->|git commit| 本地仓库 -->|git push| 远程仓库
-	end
-```
 
 
+# Git操作流程
 
-## Git设置
+1. 使用`git init`初始化本地项目
+
+   此时会生成`.git`文件夹, 用来管理当前目录
+
+2. 默认分支名为`master`, 但此时使用`git branch`无法显示, 通过`git log`的输出信息可以大致猜测
+
+   ```bash
+   fatal: your current branch 'master' does not have any commits yet
+   ```
+
+3. 使用`git add *`将当前工作区(当前目录)中的内容全部添加到暂存区中
+
+4. 使用`git commit -m "提示信息"`将暂存区的内容保存到本地仓库中, 此时再次输入`git branch`即可查看到分支名
+
+   ```bash
+   C:\Users\24563\Downloads\Documents\book>git branch
+   * master
+   ```
+
+5. 
+
+<img src="https://namebucket.oss-cn-beijing.aliyuncs.com/img/Git%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B.svg" style="zoom:20%;" />
+
+
+
+# Git设置
 
 1. 设置姓名和邮箱地址
 
@@ -58,7 +75,7 @@ flowchart LR
    	ui = auto
    ```
 
-## GitHub设置
+# GitHub设置
 
 1. 设置 SSH Key (连接仓库需要)
 
@@ -103,7 +120,7 @@ flowchart LR
    $ Hi yimeisuren! You've successfully authenticated, but GitHub does not provide shell access.
    ```
 
-## Git基本操作
+# Git基本操作
 
 ### git init—初始化仓库
 
@@ -181,14 +198,24 @@ git remote add <name> <project_url>
 2. 将本地仓库和远程仓库关联起来
 
    ```bash
-   git remote add origin https://github.com/yimeisuren/git-tutorial #origin为远程仓库名
+   git remote add origin https://github.com/yimeisuren/origin #origin为远程仓库名
    ```
 
 ### git push—推送至远程仓库
 
 ```bash
-git push -u origin master
+git push -u origin master #将本地仓库中的当前分支推送到orgin中的master分支中
 ```
+
+`git push`操作只允许操作最新版本的远程库, 否则会push失败. 
+
+> 以一个实际场景为例进行说明
+>
+> 1. 在配置好本地仓库和远程仓库之后, 将本地文件push到远程仓库中
+> 2. 发现不小心将一些隐私文件进行了上传, 登录到github上进行手动删除
+> 3. 在之后某天, 对本地仓库的一些文件进行增删改之后, 重新push, 此时发现push失败
+>
+> 上面失败的原因在于, 当在github上手动删除文件时, 此时本地仓库的版本和远程仓库中的版本不一致, 因此无法直接push, 需要先pull, 然后再进行push操作. 
 
 ### 版本回退
 
@@ -199,78 +226,60 @@ git push -u origin master
 
 在当前git目录下创建`.gitignore`文件, 在其中配置想要忽略的文件
 
+# 分支
+
+### 创建分支
+
+<u>语法</u>: `git branch <branchName>`
 
 
 
+### 查看分支
 
-# 以前的Git学习记录
+<u>语法</u>: `git branch`
 
-本地库和远程库
+从下面的示例可以看出, 创建了一个名为`X`的分支, 并显示了出来
 
-> A  : 本地库push ------->代码托管中心(远程库),
->
-> B : 从代码托管中心clone-------->自己的本地库, 加入A的团队后可以将自己的修改push到A的远程库
->
-> A : 从远程库中将B修改的部分pull---------->本地库
->
-> C : 没有加入A的团队, 需要将A的远程库fork一份到自己的远程库, 当C做了一些修改希望合并到A的远程库中, 就需要发起pull request, 然后A去审核, 如果可以, A执行merge操作就会把C做的修改合并到自己的项目里面
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git branch X
+C:\Users\24563\Downloads\Documents\XNote>git branch
+  X
+* master
+```
 
- 
+### 切换分支和当前分支Head
 
->    ```git
->   3.文件命令
->    git status : 查看工作区,暂存区的状态
->    git add : 添加到暂存区,可撤销
->    git commit -m "your_message": 提交
->    #nothing to commit 没有什么可提交的东西,表示暂存区没有东西
->    #显示no commits yet,代表本地库中没有任何东西,本地库保存的是已经提交的东西 
->
->    #查看历史记录
->    git log --oneline : 一行显示日志
->
->    git reflog : 另外显示HEAD指针需要移动的步数
->    	多屏显示控制 : 空格向下翻页 b向上翻页 q退出
->    	选中即复制,直接粘贴即可
-> 
->    #版本前进或后退
->     git reset --hard [局部索引值]
->    	--hard : 	在本地库移动HEAD指针
->   				重置暂存区
->    				重置工作区
->        	--mixed : 	在本地库移动HEAD指针
->    				重置暂存区
->   	--soft  :   只会在本地库移动HEAD指针
-> 
->   #被删文件找回 : 	前提是文件曾经被提交到过本地库
->    				删除操作也需要提交到本地库,所有的操作提交到本地库就会生成一个新版本
->    #比较文件差异 :	git diff [文件名]
->    					比较工作区文件和缓存区文件
->    				git diff
->    					比较多个文件
->    				dit diff [本地库历史版本][文件名]
->    					比较当前工作区和历史版本文件
->    			文件以行为单位进行储存,例如在ff后面添加1,会被认为是先删除ff,再写入ff1
->    ```
-> 
->    ``` 
->    4.分支操作
->    git branch -v			查看分支,并高亮显示当前所在分支
->    git branch [分支名]  	创建分支
->    git checkout [分支名] 	切换分支
-> 
->    #合并分支 : 切换到需要修改的分支上,然后使用git merge [分支名]
->    合并时如果产生分支冲突 : 
->    	1.编辑文件,删除特殊标记
->    	2.修改冲突文件,二选一,再添加
->    	3.git add[文件名]
->    	4.git commit -m"日志信息"
->    ```
-> 
-> 2. 远程库操作
-> 
->    ```
->    git clone [地址] :从远程库克隆到本地库,自动创建别名和初始化本地库
->    github只允许在最新版的基础上进行push,加入我pull的是上一个版本,此时仓库发生了改变,我此时再push就会被拒绝
-> 
-> 
+当前分支是指在本地工作区中操作的那个分支. Head指向哪个分支, 则那个分支即为<u>当前分支</u>. 可以使用`git log`查看当前分支, 如下所示当前分支为master分支. 
+
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git log
+commit 93a491c96359852a42ffff8c7300ac3640416cd7 (HEAD -> master, XNote/master, X)
+Author: yimeisuren <2456387473@qq.com>
+Date:   Fri Jun 10 10:16:07 2022 +0800
+
+    重新提交
+```
+
+使用`git checkout -b <branchName>`进行切换分支, 添加`-b`选项表示如果分支不存在, 则先进行创建分支, 再进行切换, 如下所示
+
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git checkout X
+Switched to branch 'X'
+M       vue-admin-template
+M       "\350\275\257\344\273\266\351\241\271\347\233\256\347\256\241\347\220\206/Git\345\222\214GitHub.md"
+
+C:\Users\24563\Downloads\Documents\XNote>git log
+commit 93a491c96359852a42ffff8c7300ac3640416cd7 (HEAD -> X, XNote/master, master)
+Author: yimeisuren <2456387473@qq.com>
+Date:   Fri Jun 10 10:16:07 2022 +0800
+
+    重新提交
+```
+
+### 合并分支
+
+<u>语法</u>: `git merge <branchName>`
+
+将`<branchName>`分支中的提交内容合并到当前分支中
+
 
