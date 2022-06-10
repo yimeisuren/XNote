@@ -4,7 +4,9 @@
 
 由Git管理的项目, 分为本地仓库和远程仓库, 二者本质上类似, <u>都可以有多个分支</u>.
 
-仓库的URL为: `https://github.com/<userName>/<repositoryName>`
+仓库的URL为: `https://github.com/<owner>/<repositoryName>`
+
+
 
 ![image-20220209042638957](https://namebucket.oss-cn-beijing.aliyuncs.com/img/GitHub%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
@@ -33,7 +35,29 @@
    * master
    ```
 
-5. 
+5. 创建远程仓库
+
+   1. 可以登录到GitHub上手动创建远程仓库, <u>保持本地项目名和远程仓库名一致</u>
+
+      <img src="https://namebucket.oss-cn-beijing.aliyuncs.com/img/github%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93.png" alt="image-20220610131041077" style="zoom:70%;" />
+
+   2. 通过命令行创建一个远程仓库
+
+      ```bash
+      echo "# book" >> README.md 										# 创建README.md文件
+      git init 														# 初始化项目
+      git add README.md												# 添加README.md文件到暂存区
+      git commit -m "first commit"									# 提交到本地仓库
+      git branch -M main												# 分支为main
+      git remote add book https://github.com/yimeisuren/book.git		# 为远程仓库URL命名为book
+      git push -u book main											# 将本地仓库推送到book
+      ```
+
+      
+
+   
+
+   
 
 <img src="https://namebucket.oss-cn-beijing.aliyuncs.com/img/Git%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B.svg" style="zoom:20%;" />
 
@@ -281,5 +305,4 @@ Date:   Fri Jun 10 10:16:07 2022 +0800
 <u>语法</u>: `git merge <branchName>`
 
 将`<branchName>`分支中的提交内容合并到当前分支中
-
 
