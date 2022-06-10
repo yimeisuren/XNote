@@ -199,6 +199,62 @@ git push -u origin master
 
 在当前git目录下创建`.gitignore`文件, 在其中配置想要忽略的文件
 
+## 分支
+
+### 创建分支
+
+<u>语法</u>: `git branch <branchName>`
+
+
+
+### 查看分支
+
+<u>语法</u>: `git branch`
+
+从下面的示例可以看出, 创建了一个名为`X`的分支, 并显示了出来
+
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git branch X
+C:\Users\24563\Downloads\Documents\XNote>git branch
+  X
+* master
+```
+
+### 切换分支和当前分支Head
+
+当前分支是指在本地工作区中操作的那个分支. Head指向哪个分支, 则那个分支即为<u>当前分支</u>. 可以使用`git log`查看当前分支, 如下所示当前分支为master分支. 
+
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git log
+commit 93a491c96359852a42ffff8c7300ac3640416cd7 (HEAD -> master, XNote/master, X)
+Author: yimeisuren <2456387473@qq.com>
+Date:   Fri Jun 10 10:16:07 2022 +0800
+
+    重新提交
+```
+
+使用`git checkout -b <branchName>`进行切换分支, 添加`-b`选项表示如果分支不存在, 则先进行创建分支, 再进行切换, 如下所示
+
+```bash
+C:\Users\24563\Downloads\Documents\XNote>git checkout X
+Switched to branch 'X'
+M       vue-admin-template
+M       "\350\275\257\344\273\266\351\241\271\347\233\256\347\256\241\347\220\206/Git\345\222\214GitHub.md"
+
+C:\Users\24563\Downloads\Documents\XNote>git log
+commit 93a491c96359852a42ffff8c7300ac3640416cd7 (HEAD -> X, XNote/master, master)
+Author: yimeisuren <2456387473@qq.com>
+Date:   Fri Jun 10 10:16:07 2022 +0800
+
+    重新提交
+```
+
+### 合并分支
+
+<u>语法</u>: `git merge <branchName>`
+
+将`<branchName>`分支中的提交内容合并到当前分支中
+
 
 
 
