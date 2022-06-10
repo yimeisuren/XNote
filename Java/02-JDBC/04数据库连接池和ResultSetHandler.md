@@ -1,0 +1,7 @@
+使用数据库连接池来获取连接
+
+使用ResultSetHandler来处理获取查询返回对象
+
+使用QueryRunner来执行一些通用查询
+
+使用DbUtils工具类来关闭数据库连接
