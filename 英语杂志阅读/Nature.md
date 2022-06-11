@@ -16,7 +16,7 @@ One of the most shocking impacts of the COVID-19 pandemic <u>has nothing to do</
 
 <u>Two years into the pandemic</u>[^7], schools had been completely closed for <u>an average of</u>[^8] more than 4.5 months across countries. <u>One in ten</u>[^9] countries had closed schools for more than nine months, according to the United Nations cultural organization (UNESCO), and millions of children around the world had not <u>gone back</u>[^10] at all. Data are still <u>coming in</u>[^11], but they are starting to confirm what everyone feared: that the children facing the biggest setbacks in learning are those who are poor <u>or otherwise</u>[^12] <u>disadvantaged</u>[^13]. And <u>it is well established that</u>[^14] learning losses leave <u>lifelong scars</u>[^15], so it is likely that this will lead to lost opportunities and lower incomes for <u>decades to come</u>[^16].
 
-[^7]:进入疫情的两年–>疫情发生的两年后
+[^7]:进入疫情的两年->疫情发生的两年后
 [^8]:平均
 [^9]:十分之一
 [^10]:返回
@@ -34,5 +34,43 @@ Many nations want to <u>minimize</u>[^17] these losses, but <u>returning schools
 [^19]:在孩子的教育中涉及到父母; 让父母参与到孩子的教育中来
 [^20]:通过研究
 
-Too often, such research is overlooked by educators and ignored by policymakers who mistakenly think they know what works best. But putting evidence-based insights to work in classrooms around the world would help children to recover from the educational damage inflicted by the pandemic. It would also strengthen entire education systems, many of which were failing children well before COVID-19 struck. Many children are denied education by conflict, poverty or politics, including crises such as the war in Ukraine and the Taliban’s decision to exclude many girls from school in Afghanistan.
+Too often, such research is overlooked by educators and ignored by policymakers who mistakenly think they know what works best. But <u>putting</u> evidence-based insights <u>to work in</u>[^21] classrooms around the world would help children to recover from the educational damage inflicted by the pandemic. It would also strengthen entire education systems, <u>many of which were failing</u>[^22] ~~children well~~ before COVID-19 struck. Many children <u>are denied</u>[^23] education by conflict, poverty or politics, including crises such as the war in Ukraine and the Taliban’s decision to exclude many girls from school in Afghanistan.
+
+[^21]:将…运用到..上
+[^22]:其中许多是不合格的
+[^23]:被拒绝->被剥夺;
+
+<u>Proponents</u>[^24] of evidence-informed education have to be <u>realistic</u>[^25] about the limitations of research. One big challenge is the huge variation in classrooms and schools within countries and around the world. A <u>tutoring programme</u>[^26] shown to be effective at one school might not work at another if the children’s ages, learning styles or home environments differ, or if it is implemented in a different way. Educational research tends to serve as a guide — but it is not a guarantee that something will work for a particular classroom or child, or when scaled up across a nation. It’s therefore <u>invaluable</u>[^27] for teachers to be <u>fully involved in</u>[^28] research and in applying results.
+
+[^24]:支持者
+[^25]:现实的->现实地看待…
+[^26]:辅导计划
+[^27]:宝贵的,无价的
+[^28]:充分参与
+
+Beyond this, there is a growing body of evidence showing how best to <u>get</u> research insights <u>into</u>[^29] the classroom. A <u>top-down</u>[^30] approach that forces new methods on educators doesn’t generally succeed. A better way, argues Rukmini Banerji, who leads Pratham, an educational non-governmental organization in New Delhi, is to encourage teachers and students to <u>try out</u>[^31] evidence-backed approaches for themselves.
+
+[^29]:将…带进…
+[^30]:自上而下的
+[^31]:尝试
+
+In some cases, the disruption caused by COVID-19 introduced fresh ways of thinking and working in education — as difficult as those changes have been. Schools invented ways of delivering lessons digitally, teachers became more involved in children’s social and emotional health, and parents became engaged in what their children were learning at home. Unfortunately, the impact of these innovations hasn’t been <u>well studied</u>[^32], because they happened so fast. Researchers and schools should make the most of the data they can collect and, where possible, gather more, so that they can <u>hold on</u>[^33] to innovations that helped — both to assist children now and to strengthen education overall.
+
+[^32]:很好地研究
+[^33]:坚持
+
+It’s also important to <u>track</u>[^34] <u>cohorts of children</u>[^35] to expose the <u>lasting impacts</u>[^36] of missed schooling, as well as other consequences of the pandemic. And where innovations and catch-up programmes are in place, their impact should be measured with <u>rigorous</u>[^37] research, so that these data are available <u>when learning is next upended</u>[^38].
+
+[^34]:追踪
+[^35]:学生群体;学生队列
+[^36]:持续的影响
+[^37]:严格的
+[^38]:当学习下一次被颠覆时->当下一次发生类似情况时
+
+Some have suggested that children might be able to <u>bounce</u>[^39] back quickly from COVID-related school closures by putting on a <u>learning spurt</u>[^40]. A more realistic view is that the <u>better-off</u>[^41] children will recover quickest, and the pandemic will amplify existing deep inequalities in education. That’s why any efforts to help children today — and build the education systems of tomorrow — must focus on the most <u>marginalized</u>[^42] and disadvantaged children first.
+
+[^39]:反弹
+[^40]:突然学习->快速学习->卷
+[^41]:富裕的
+[^42]:被边缘化的
 
