@@ -634,3 +634,208 @@ Can't open /var/run/atd.pid to signal atd. No atd running? #似乎对正确执�
 [root@hadoop100 ~]# echo "poweroff" | at 23:00
 ```
 
+# 用户身份与文件权限
+
+> + 用户身份与能力
+> + 文件权限与归属
+> + 文件的特殊权限
+> + 文件的隐藏属性
+> + 文件访问控制列表
+> + su命令与sudo服务
+
+Linux时一个多用户, 多任务的操作系统. 本章介绍如何添加, 删除, 修改用户账户信息. 
+
+<u>文件访问控制列表(Access Control List, ACL)</u>可以进一步让单一用户或用户组对文件或目录进行权限设置, <u>使得文件具有满足工作需求的最小权限.</u>
+
+## 用户身份与能力
+
+Linux系统的设计初衷之一是为了满足多个用户同时工作的需求, 因此必须具备很好的安全性, 尤其是不能因为一两个服务出错而影响到整台服务器.
+
+root管理员就是存在于所有类UNIX系统中的超级用户, 它拥有最高的系统所有权，能够管理系统的各项功能，如添<u>加/删除用户、启动/关闭服务进程、开启/禁用硬件设备</u>等. root管理员工作时不会受到系统的限制, 但如果root管理员执行了错误的[Linux命令](https://www.linuxcool.com/), 可能会直接毁掉整个系统.
+
+### UID
+
++ uid=0: root用户
++ uid$\in$[1,999]: 系统用户, 执行系统服务进程
++ uid$\in$[1000, $+\infty$): root用户创建的普通用户
+
+### GID
+
+在Linux系统中创建每个用户时，将自动创建一个与其同名的<u>基本用户组</u>，而且这个基本用户组只有该用户一个人。如果该用户以后被归纳到其他用户组，则这个其他用户组称之为<u>扩展用户组</u>。一个用户只有一个基本用户组，但是可以有多个扩展用户组
+
+基本用户组相当于==“我”==这个组, 有且只有一个成员. 而<u>扩展用户组则相当于用户的身份</u>, 用户可以有不同的身份, 例如既可以是男性, 也可以是学生, 还可以是志愿者. 
+
+如果扩展组被删除, 则该组中用户的扩展组会重新变为其基本用户组.
+
+## 命令
+
+### id命令
+
+用于显示用户的详细信息, 分别是uid(用户id), gid(基本用户组id), groups(扩展组id)
+
+```bash
+[root@hadoop100 ~]# id root
+uid=0(root) gid=0(root) groups=0(root)
+[root@hadoop100 ~]# id xiong
+uid=1000(xiong) gid=1000(xiong) groups=1000(xiong)
+```
+
+### useradd命令
+
+用于创建普通用户
+
+```bash
+[root@hadoop100 ~]# useradd tom
+[root@hadoop100 ~]# id tom
+uid=1001(tom) gid=1001(tom) groups=1001(tom)
+```
+
+### userdel命令
+
+用于删除用户, 虽然用户已经被删除, 但是其目录数据仍然存放在其家目录中, 需要手动进行删除.
+
+```bash
+[root@hadoop100 ~]# userdel tom
+[root@hadoop100 ~]# useradd tom
+useradd: warning: the home directory already exists.
+Not copying any file from skel directory into it.
+Creating mailbox file: File exists
+```
+
+### groupadd命令
+
+用于创建扩展组
+
+```bash
+[root@hadoop100 ~]# groupadd people
+```
+
+
+
+### usermod命令
+
+用于修改用户的属性. 在Linux系统中一切都是文件, 因此可以使用`usermod`命令来修改用户信息.
+
+<center>usermod命令选项参数表</center>
+
+| 选项  | 作用                                     |
+| ----- | ---------------------------------------- |
+| `-c`  | 填写用户账户的备注信息                   |
+| `-dm` | 重新指定用户的家目录, 并将旧数据迁移过去 |
+| `-e`  | 账户的到期时间, 格式为YYYY-mm-DD         |
+| `-g`  | 变更所属的用户组                         |
+| `-G`  | 变更所属的扩展组                         |
+| `-L`  | 将用户加入黑名单, 禁止其登录系统         |
+| `-U`  | 解除黑名单限制                           |
+| `-s`  | 变更默认终端                             |
+| `-u`  | 修改用户的UID                            |
+
+```bash
+# 将用户tom添加到扩展组people中
+[root@hadoop100 ~]# usermod -G people tom
+[root@hadoop100 ~]# id tom
+uid=1001(tom) gid=1001(tom) groups=1001(tom),1002(people)
+```
+
+### passwd命令
+
+用于修改用户密码
+
+```bash
+[root@hadoop100 ~]# passwd --stdin xiong
+Changing password for user xiong.
+xiong
+passwd: all authentication tokens updated successfully.
+```
+
+<center>passwd命令选项参数表</center>
+
+| 选项      | 作用                                             |
+| --------- | ------------------------------------------------ |
+| `-l`      | 加黑名单                                         |
+| `-u`      | 解除黑名单                                       |
+| `--stdin` | 允许通过标准输入来修改用户密码                   |
+| `-d`      | 删除用户密码, 之后可以不使用密码进行登录         |
+| `-e`      | 强制用户在下次登录时修改密码                     |
+| `-S`      | 显示用户密码是否被锁定, 以及密码所采用的加密算法 |
+
+## 文件权限与归属
+
+### 文件权限
+
+在Linux系统中，每个文件都有归属的所有者和所属组，并且规定了文件的所有者、所属组以及其他人对文件所拥有的可读（r）、可写（w）、可执行（x）等权限.
+
+<center>文件和目录的权限</center>
+
+| 权限      | 文件           | 目录       |
+| --------- | -------------- | ---------- |
+| 读取(r=4) | `cat`          | `ls`       |
+| 写入(w=2) | `vim`          | `touch/mv` |
+| 执行(x=1) | `./<filename>` | `cd`       |
+
+<u>对文件</u>
+
++ ==可读==: 能够读取文件的实际内容
++ ==可写==: 能够编辑, 新增, 修改, 删除文件的实际内容
++ ==可执行==: 能够运行一个脚本程序
+
+<u>对目录</u>
+
++ ==可读==: 能够读取目录中的文件列表
++ ==可写==: 能够在目录内增加, 删除, 重命名文件
++ ==可执行==: 能够进入到该目录中
+
+### 文件类型
+
+在下面列出的文件信息中, 依次分别是==文件类型, ugo的文件权限, 硬链接数量, 属主, 属组, 占用大小, 修改时间, 文件名==. 
+
+<u>第一位字符表示文件类型</u>, 常见的文件类型见[表7-4](#table7-4)
+
+```bash
+[root@hadoop100 ~]# ls -l
+total 17556
+-rw-------. 1 root root     2610 Jun  5 14:14 anaconda-ks.cfg
+-rwxr--r--. 1 root root      136 Jun 13 19:50 example.sh
+-rw-r--r--. 1 root root      581 Jun  9 14:32 hardLink
+-rw-r--r--. 1 root root    34960 Jun  8 19:35 installed_software
+-rw-r--r--. 1 root root 17676281 Sep 22  2020 LinuxProbe.pdf
+-rwxr--r--. 1 root root       66 Jun 13 21:26 mkdir.sh
+-rw-------. 1 root root     2045 Jun  8 18:06 original-ks.cfg
+-rw-r--r--. 1 root root      134 Jun 13 21:30 pingtest.sh
+-rw-r--r--. 1 root root      233 Jun 13 15:49 psAux_grepBash
+-rw-r--r--. 1 root root   233354 Jun 10 18:57 test
+```
+
+普通文件的范围最广泛, 例如纯文本信息, 配置文件, 日志文件, shell脚本等.
+
+目录文件的范围也比较广泛.
+
+块设备文件和字符设备文件一般是指硬件设备, 比如鼠标, 键盘, 光驱, 硬盘等.
+
+<center><a name="table7-4"></a>文件类型参数表</center>
+
+| 符号 | 文件类型   |
+| ---- | ---------- |
+| `-`  | 普通文件   |
+| `d`  | 目录文件   |
+| `l`  | 链接文件   |
+| `p`  | 管道文件   |
+| `b`  | 块设备文件 |
+| `c`  | 字符文件   |
+
+## 文件的特殊权限
+
+特殊权限是用来弥补一般权限不能实现的功能, 是对一般权限的一种补充, 通常和一般的文件权限rwx搭配使用.
+
+### SUID权限
+
+SUID权限是一种对二进制程序设置的特殊权限, 能够==让二进制程序的执行者临时拥有所有者的权限==. <u>SUID权限仅仅对拥有执行权限的二进制程序有效.</u>
+
+对一个应用程序, 在Linux系统中实际上就是一个命令, 例如`passwd`命令, 通过`ls -l /bin/passwd`查看其信息
+
+```bash
+[root@hadoop100 /]# ls -l /bin/passwd
+-rwsr-xr-x. 1 root root 27856 Apr  1  2020 /bin/passwd
+```
+
+可以看到拥有者的文件权限为`rws`, 其中的`s`即表示该程序具有SUID权限. 
